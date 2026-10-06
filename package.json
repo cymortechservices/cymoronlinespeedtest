@@ -1,0 +1,13 @@
+{
+  "name": "cymor-internet-speed-test",
+  "private": true,
+  "version": "1.0.0",
+  "description": "CYMOR Internet Speed Test - React frontend (Vercel) + Cloudflare Worker backend + Gemini analysis",
+  "scripts": {
+    "install:all": "npm --prefix frontend install && npm --prefix backend install",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "dev:backend": "npm --prefix backend run dev",
+    "build": "npm --prefix frontend run build",
+    "deploy:backend": "npm --prefix backend run deploy"
+  }
+}

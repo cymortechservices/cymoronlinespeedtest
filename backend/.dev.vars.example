@@ -1,0 +1,6 @@
+# Copy to backend/.dev.vars (git-ignored). Used by `npm run dev` only.
+# Get a key at https://aistudio.google.com/apikey
+GEMINI_API_KEY=
+# Optional local overrides:
+# ALLOWED_ORIGINS=http://localhost:5173
+# GEMINI_MODEL=gemini-2.5-flash
