@@ -1,0 +1,45 @@
+name: Extract project zip
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "cymor-internet-speed-test.zip"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check the zip exists
+        id: check
+        run: |
+          if [ -f cymor-internet-speed-test.zip ]; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "found=false" >> "$GITHUB_OUTPUT"
+            echo "No zip found, nothing to do."
+          fi
+
+      - name: Extract into the repo root
+        if: steps.check.outputs.found == 'true'
+        run: |
+          mkdir /tmp/unz
+          unzip -q cymor-internet-speed-test.zip -d /tmp/unz
+          # The zip contains one top-level folder; copy its contents to the repo root
+          cp -a /tmp/unz/cymor-internet-speed-test/. .
+          rm cymor-internet-speed-test.zip
+
+      - name: Commit the extracted files
+        if: steps.check.outputs.found == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Extract CYMOR Internet Speed Test project"
+          git push
